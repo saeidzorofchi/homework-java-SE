@@ -1,54 +1,79 @@
 package org.example;
 
 
+import org.example.multiThread.MyRunnable;
+import org.example.multiThread.MyThread;
+import org.example.serialization.User;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class Main {
-    public static void main(String[] args) {
-
-
-
-        System.out.println();
+    public static void main(String[] args) throws InterruptedException {
         System.out.println();
 
-        User user = new User("saeed", 30);
 
+//////////////// START Serialization section block////////////////
+        System.out.println("//////////////// START Serialization section block////////////////");
+        System.out.println();
+        {
+
+            User user = new User("saeed", 30, 1234, "sdewrf");
 
 // serialization obj user
-        try {
-            FileOutputStream fileOut = new FileOutputStream("user.ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(user);
-            out.close();
-            fileOut.close();
-            System.out.println("Ob j has been seri");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println();
-        System.out.println();
-
+            try {
+                FileOutputStream fileOut = new FileOutputStream("user.ser");
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                out.writeObject(user);
+                out.close();
+                fileOut.close();
+                System.out.println("Ob j has been seri");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println();
 
 // unserialization obj user
 
-        try {
-            FileInputStream fileIn = new FileInputStream("user.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            User user1 = (User) in.readObject();
+            try {
+                FileInputStream fileIn = new FileInputStream("user.ser");
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                User user1 = (User) in.readObject();
 
-            System.out.println("Obj has been deseri");
-            System.out.println("Name : " + user1.getName());
-            System.out.println("Age : " + user1.getAge());
+                System.out.println("Obj has been deseri");
+                System.out.println(user1.toString());
 
-            in.close();
-            fileIn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+                in.close();
+                fileIn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
+        System.out.println();
+        System.out.println("//////////////// END Serialization section block ////////////////\n");
+        System.out.println();
+        System.out.println();
+        System.out.println();
+//////////////// END Serialization section block ////////////////
 
+
+//////////////// START Thread section block ////////////////
+        System.out.println("//////////////// START Thread section block ////////////////");
+        System.out.println();
+        {
+            System.out.println("print on main method");
+            MyThread thread1 = new MyThread();
+            thread1.start();
+            System.out.println();
+
+            Thread thread2 = new Thread(new MyRunnable());
+            thread2.start();
+
+
+        }
 
 
     }
