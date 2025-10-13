@@ -3,6 +3,8 @@ package org.example;
 
 import org.example.multiThread.MyRunnable;
 import org.example.multiThread.MyThread;
+import org.example.multiThread.Thread0to100;
+import org.example.multiThread.ThreadAtoZ;
 import org.example.serialization.User;
 
 import java.io.FileInputStream;
@@ -71,6 +73,21 @@ public class Main {
 
             Thread thread2 = new Thread(new MyRunnable());
             thread2.start();
+            System.out.println();
+            System.out.println();
+
+
+
+
+
+            Thread t1 = new Thread(new ThreadAtoZ());
+            t1.start();
+            t1.setPriority(7);
+            new Thread0to100().start();
+            new Thread(new ThreadAtoZ()).start();
+            new Thread0to100().start();
+            t1.join();
+
 
 
         }
